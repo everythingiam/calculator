@@ -8,7 +8,19 @@ let numberArray = [];
 const displayResult = document.querySelector('h1');
 
 let numbers = document.querySelectorAll('.num-btn');
-let operators = documentq.querySelectorAll('.oper-btn');
+let operators = document.querySelectorAll('.oper-btn');
+
+numbers.forEach(elem => {
+    elem.addEventListener('click', (event) => {
+        addNumberOnScreen(event.target.innerHTML);
+    });
+})
+window.addEventListener('keydown', (event) => {
+    if ((isNaN(parseFloat(event.key))) ) {
+        return;
+    }
+    addNumberOnScreen(Number(event.key));
+})
 
 // for (let i = 0; i <= 9; i++){
 //     document.getElementById(`${i}`).onclick = () => addNumberOnScreen(`${i}`);
@@ -47,12 +59,15 @@ let operators = documentq.querySelectorAll('.oper-btn');
 //     displayResult.textContent = 0;
 // }
 
-// function addNumberOnScreen(number){
-//     numberArray.push(number);
-//     let joined = +numberArray.join('');
-//     numeroUno = joined;
-//     displayResult.textContent = joined;
-// }
+function addNumberOnScreen(number){
+    if (numberArray.length > 10){
+        return;
+    }
+    numberArray.push(number);
+    let joined = +numberArray.join('');
+    numeroUno = joined;
+    displayResult.textContent = joined;
+}
 
 function operate(a, b, operatorPar){
     switch (operatorPar){
@@ -70,16 +85,11 @@ function operate(a, b, operatorPar){
             break;
     }
 }
-// let buttons = document.querySelectorAll('.num-btn');
-// buttons.forEach((elem) => {
-//     elem.addEventListener("keydown", function(event){
-//         console.log(event);
-//     });
-// });
+
 window.addEventListener("keydown", function(event){
-    console.log(event.key);
+    console.log(event.key + ' ' + typeof (event.key));
 });
-window.addEventListener("click", function(event){
-    console.log(event.target.innerHTML);
-});
+// window.addEventListener("click", function(event){
+//     console.log(event.target.innerHTML);
+// });
 
