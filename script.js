@@ -6,9 +6,8 @@ let finish = false;
 const display = document.querySelector('h1');
 const numBtn = document.querySelectorAll('.num-btn');
 const operBtn = document.querySelectorAll('.oper-btn');
-
-// const numArr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
-// const operArr = ['+', '-', '*', '/'];
+const equalsBtn = document.querySelector('.equals');
+const clearBtn = document.querySelector('.clear');
 
 numBtn.forEach((elem) => {
     elem.addEventListener('click', () => {
@@ -27,21 +26,21 @@ numBtn.forEach((elem) => {
 
 operBtn.forEach((elem) => {
     elem.addEventListener('click', () => {
-        // if (finish == true){
-        //     dos = ''
-        // }
         operator = elem.textContent;
-        display.textContent = uno;
         operate(uno, dos, operator);
+        if (dos != '0'){ 
+            display.textContent = uno;
+        }
         dos = '';
-        // finish = false;
+        finish = false;
     })
 })
 
-const equals = document.querySelector('.equals');
-equals.addEventListener('click', () => {
-    display.textContent = uno;
+equalsBtn.addEventListener('click', () => {
     operate(uno, dos, operator);
+    if (dos != '0'){ 
+        display.textContent = uno;
+    }
     finish = true;
     dos = '';
 })
@@ -61,14 +60,26 @@ function operate(a, b, sign){
             break;
         case '/':
             if (dos == '0'){
+                clear();
+                dos = '0';
                 display.textContent = 'Невозможно';
-                uno = '0';
             }
             if (dos != ''){ 
                 uno = (+a) / (+b);
             }
             break;
     }
+}
+
+clearBtn.addEventListener('click', () =>{
+    clear();
+});
+
+function clear(){
+    uno = '';
+    dos = '';
+    operator = '';
+    display.textContent = '0';
 }
 // window.addEventListener("keydown", function(event){
 //     console.log(event.key + ' ' + typeof (event.key));
